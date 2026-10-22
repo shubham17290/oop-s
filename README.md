@@ -62,17 +62,11 @@ Each topic lives in its own folder where you can keep your notes, diagrams, and 
 
 ```
 oop-s/
-├── 01 OOPs in Life/                          # Real-world analogies
-├── 02 How to create objects in c++/           # Classes & object creation
-├── 03 Encapsulation in c++/                   # Data hiding
-├── 04 Implementation inheritance in c++/      # Inheritance
-├── 05 Polymorphism in c++/                    # Polymorphism
-├── 06 Abstraction in c++/                     # Abstraction
-├── 07 Miscellaneous Concepts/                 # Advanced bits
 ├── docs/
 │   └── index.html                            # Companion webpage
 ├── README.md
 ├── LICENSE
+├── CONTRIBUTING.md
 └── .gitignore
 ```
 
@@ -102,9 +96,9 @@ g++ your_example.cpp -o your_example.exe; .\your_example.exe
 
 ## 🧭 How to Use This Repo
 
-1. Read the topic folder in order (01 → 07).
-2. Open the topic folder and add/read your notes and code experiments.
-3. Compile & run your own examples.
+1. Read the topics in order (01 → 07) on the webpage.
+2. Study each topic's explanation and code snippet.
+3. Try the snippets yourself in a C++ compiler.
 4. Modify values, break things, observe — that's how it sticks.
 5. Visit the webpage for a visual summary.
 
