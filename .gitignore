@@ -1,0 +1,15 @@
+# Compiled binaries
+*.exe
+*.out
+*.o
+*.obj
+
+# IDE / editor
+.vscode/
+.idea/
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

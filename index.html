@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OOP in C++ — From Real Life to Code</title>
+<meta name="description" content="A beginner-friendly, concept-first guide to Object Oriented Programming in C++." />
+<style>
+  :root {
+    --bg: #0b1020;
+    --bg-soft: #121a33;
+    --card: #16204a;
+    --card-2: #1c2755;
+    --text: #e8ecff;
+    --muted: #9aa6d6;
+    --accent: #6ea8fe;
+    --accent-2: #a78bfa;
+    --accent-3: #34d399;
+    --code-bg: #0d1326;
+    --border: rgba(255,255,255,0.08);
+    --shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+    background: radial-gradient(1200px 600px at 10% -10%, #1a2a6c55, transparent 60%),
+                radial-gradient(900px 500px at 90% 0%, #6a1b9a44, transparent 60%),
+                var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(11,16,32,0.7);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand { font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+  nav ul { list-style: none; display: flex; gap: 6px; margin: 0; padding: 0; flex-wrap: wrap; }
+  nav ul li a { padding: 6px 12px; border-radius: 8px; font-size: 0.9rem; color: var(--muted); }
+  nav ul li a:hover { color: var(--text); background: rgba(255,255,255,0.06); text-decoration: none; }
+
+  /* Hero */
+  header.hero {
+    padding: 80px 24px 60px;
+    text-align: center;
+    max-width: 900px; margin: 0 auto;
+  }
+  .badge {
+    display: inline-block; padding: 6px 14px; border-radius: 999px;
+    background: linear-gradient(135deg, rgba(110,168,254,0.15), rgba(167,139,250,0.15));
+    border: 1px solid var(--border); color: var(--accent); font-size: 0.85rem; margin-bottom: 18px;
+  }
+  h1 { font-size: clamp(2rem, 5vw, 3.2rem); margin: 0 0 12px; line-height: 1.15;
+       background: linear-gradient(135deg, #fff, var(--accent), var(--accent-2));
+       -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { color: var(--muted); font-size: 1.15rem; max-width: 640px; margin: 0 auto 28px; }
+  .hero .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    padding: 12px 22px; border-radius: 10px; font-weight: 600; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.06); color: var(--text); cursor: pointer; transition: transform .15s, background .15s;
+  }
+  .btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); text-decoration: none; }
+  .btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: none; color: #0b1020; }
+  .btn.primary:hover { filter: brightness(1.1); }
+
+  /* Sections */
+  section { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+  h2 { font-size: 1.9rem; margin: 0 0 8px; }
+  .section-sub { color: var(--muted); margin-bottom: 32px; }
+
+  /* Topics grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .card {
+    background: linear-gradient(180deg, var(--card), var(--card-2));
+    border: 1px solid var(--border); border-radius: 16px; padding: 22px;
+    transition: transform .2s, box-shadow .2s; cursor: pointer; position: relative; overflow: hidden;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .card .num { font-size: 0.8rem; color: var(--accent); font-weight: 700; letter-spacing: 1px; }
+  .card h3 { margin: 6px 0 8px; font-size: 1.15rem; }
+  .card p { color: var(--muted); font-size: 0.92rem; margin: 0; }
+  .card .tag { display: inline-block; margin-top: 12px; font-size: 0.75rem; padding: 3px 9px; border-radius: 6px; background: rgba(110,168,254,0.12); color: var(--accent); }
+
+  /* Concept map */
+  .map {
+    background: var(--bg-soft); border: 1px solid var(--border); border-radius: 16px;
+    padding: 30px; text-align: center; font-family: "Consolas", "Fira Code", monospace; font-size: 0.9rem;
+    overflow-x: auto; white-space: pre; color: var(--muted);
+  }
+  .map .hl { color: var(--accent-3); }
+
+  /* Topic detail */
+  .detail { display: none; }
+  .detail.active { display: block; }
+  .detail .panel {
+    background: var(--bg-soft); border: 1px solid var(--border); border-radius: 16px; padding: 28px;
+  }
+  .detail h3 { color: var(--accent); }
+  .bullets { columns: 2; column-gap: 24px; }
+  @media (max-width: 640px) { .bullets { columns: 1; } }
+  .bullets li { margin-bottom: 6px; }
+
+  /* Code block */
+  pre.code {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px; overflow-x: auto; font-family: "Consolas", "Fira Code", monospace; font-size: 0.88rem;
+    line-height: 1.55; position: relative;
+  }
+  pre.code .kw { color: #c792ea; }
+  pre.code .type { color: #82aaff; }
+  pre.code .str { color: #c3e88d; }
+  pre.code .cm { color: #546e7a; font-style: italic; }
+  pre.code .num { color: #f78c6c; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tab {
+    padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04); color: var(--muted); cursor: pointer; font-size: 0.9rem;
+  }
+  .tab.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #0b1020; border: none; font-weight: 600; }
+
+  /* Footer */
+  footer {
+    text-align: center; padding: 40px 24px; color: var(--muted); font-size: 0.9rem;
+    border-top: 1px solid var(--border);
+  }
+  footer .heart { color: #f87171; }
+
+  /* Progress */
+  .progress-bar { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; margin: 10px 0 24px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); width: 0%; transition: width .3s; }
+
+  /* Quiz-ish */
+  .quiz { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-top: 16px; }
+  .quiz button { margin: 4px; }
+  .quiz .ans { margin-top: 10px; color: var(--accent-3); font-weight: 600; display: none; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px);} to { opacity: 1; transform: none;} }
+  .fade { animation: fadeUp .5s ease both; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><span class="dot"></span> OOP in C++</div>
+  <ul>
+    <li><a href="#topics">Topics</a></li>
+    <li><a href="#map">Concept Map</a></li>
+    <li><a href="#explore">Explore</a></li>
+    <li><a href="#playground">Playground</a></li>
+    <li><a href="https://github.com/shubham17290/oop-s" target="_blank" rel="noopener">GitHub</a></li>
+  </ul>
+</nav>
+
+<header class="hero fade">
+  <span class="badge">🎯 Concept-first · C++ · Beginner friendly</span>
+  <h1>OOP in C++<br/>From Real Life to Code</h1>
+  <p>Every object-oriented concept, first lived in the real world, then written in C++. No jargon without an anchor.</p>
+  <div class="cta">
+    <a class="btn primary" href="#topics">Start Learning →</a>
+    <a class="btn" href="#playground">Try a Snippet</a>
+  </div>
+</header>
+
+<section id="topics">
+  <h2>📚 Topics</h2>
+  <p class="section-sub">Seven focused modules, in recommended order. Click a card to dive in.</p>
+  <div class="grid" id="topicGrid"></div>
+</section>
+
+<section id="map">
+  <h2>🗺️ Concept Map</h2>
+  <p class="section-sub">How the pieces fit together.</p>
+  <div class="map">
+                  <span class="hl">┌──────────────┐</span>
+                  │   Real Life  │
+                  <span class="hl">└──────┬───────┘</span>
+                         │
+        ┌────────────────┼────────────────┐
+        │                │                │
+   <span class="hl">┌────▼────┐</span>     <span class="hl">┌─────▼─────┐</span>    <span class="hl">┌────▼────┐</span>
+   │  Class  │     │  Object   │    │ State & │
+   │(blueprint)    │(instance) │    │Behavior │
+   <span class="hl">└────┬────┘</span>     <span class="hl">└───────────┘</span>    <span class="hl">└─────────┘</span>
+        │
+   <span class="hl">┌────┴────────────────────────────────────┐</span>
+   │                                         │
+ Encapsulation ──► Inheritance ──► Polymorphism ──► Abstraction
+   │                                         │
+   └──────────── Miscellaneous (static, friend, operators, …)
+  </div>
+</section>
+
+<section id="explore">
+  <h2>🔍 Explore a Topic</h2>
+  <p class="section-sub">Pick a topic to read its explanation and code.</p>
+  <div class="tabs" id="tabs"></div>
+  <div id="details"></div>
+</section>
+
+<section id="playground">
+  <h2>⚡ Snippet Playground</h2>
+  <p class="section-sub">A tiny, runnable-in-mind example. Edit and reason about it.</p>
+  <pre class="code" id="playCode"></pre>
+  <div class="quiz">
+    <strong>Quick check:</strong> What does the program print?
+    <div style="margin-top:8px;">
+      <button class="btn" onclick="reveal()">Reveal answer</button>
+    </div>
+    <div class="ans" id="ans">1500 — encapsulation hides <code>balance</code>, so only <code>deposit</code>/<code>getBalance</code> can touch it.</div>
+  </div>
+</section>
+
+<footer>
+  Made with <span class="heart">♥</span> by <a href="https://github.com/shubham17290" target="_blank" rel="noopener">Shubham Mourya</a> · MIT License ·
+  <a href="https://github.com/shubham17290/oop-s" target="_blank" rel="noopener">Source on GitHub</a>
+</footer>
+
+<script>
+const topics = [
+  { id:1, num:"01", title:"OOPs in Life", tag:"Analogy", desc:"Real-world analogies: objects, classes, state & behavior.", bullets:["Everything around you is an object","A class is a blueprint (e.g., 'Car')","State = data, Behavior = methods","OOP models reality, not syntax"], code:`// Real life: a Car
+class Car {
+  // state
+  string color;
+  int speed;
+  // behavior
+  void accelerate() { speed += 10; }
+  void brake()     { speed -= 10; }
+};` },
+  { id:2, num:"02", title:"How to create objects in C++", tag:"Creation", desc:"Classes, constructors, stack vs heap, new/delete.", bullets:["class defines blueprint","Objects on stack auto-destruct","Objects on heap need delete","Constructors initialize state"], code:`class Point {
+  int x, y;
+public:
+  Point(int a, int b) : x(a), y(b) {}
+};
+int main() {
+  Point p1(1,2);        // stack
+  Point* p2 = new Point(3,4); // heap
+  delete p2;            // manual cleanup
+}` },
+  { id:3, num:"03", title:"Encapsulation in C++", tag:"Hiding", desc:"Data hiding, access specifiers, getters/setters.", bullets:["private hides data","public exposes interface","protected for inheritance","getters/setters control access"], code:`class BankAccount {
+  double balance; // private by default in class
+public:
+  BankAccount(double b): balance(b) {}
+  void deposit(double a){ balance += a; }
+  double getBalance() const { return balance; }
+};` },
+  { id:4, num:"04", title:"Implementation inheritance in C++", tag:"Reuse", desc:"Base/derived, is-a, access modes, virtual functions.", bullets:["public inheritance = is-a","protected/private = implementation reuse","virtual enables overriding","Base pointer → derived object"], code:`class Animal {
+public:
+  virtual void speak(){ cout << "sound"; }
+};
+class Dog : public Animal {
+public:
+  void speak() override { cout << "bark"; }
+};` },
+  { id:5, num:"05", title:"Polymorphism in C++", tag:"Many forms", desc:"Compile-time & run-time polymorphism.", bullets:["Function/operator overloading (compile-time)","Templates (compile-time)","Virtual functions (run-time)","Abstract base + derived overrides"], code:`// compile-time
+int add(int a,int b){ return a+b; }
+double add(double a,double b){ return a+b; }
+// run-time
+Animal* a = new Dog();
+a->speak(); // "bark" (dynamic dispatch)` },
+  { id:6, num:"06", title:"Abstraction in C++", tag:"Essence", desc:"Abstract classes, interfaces, pure virtual functions.", bullets:["Hide complexity, show essentials","Pure virtual: = 0","Cannot instantiate abstract class","Derived must implement all pure virtuals"], code:`class Shape {
+public:
+  virtual double area() = 0; // pure virtual
+  virtual ~Shape() = default;
+};
+class Circle : public Shape {
+  double r;
+public:
+  Circle(double r): r(r){}
+  double area() override { return 3.14*r*r; }
+};` },
+  { id:7, num:"07", title:"Miscellaneous Concepts", tag:"Advanced", desc:"static, friend, operator overloading, copy ctor, destructor, this.", bullets:["static shared across instances","friend grants private access","operator+ overload","Copy constructor & destructor","this pointer"], code:`class Vec {
+  int x,y;
+public:
+  Vec(int a,int b):x(a),y(b){}
+  Vec(const Vec& o):x(o.x),y(o.y){} // copy ctor
+  Vec operator+(const Vec& o){ return Vec(x+o.x, y+o.y); }
+  static int count;
+};` }
+];
+
+const grid = document.getElementById('topicGrid');
+topics.forEach(t => {
+  const c = document.createElement('div');
+  c.className = 'card fade';
+  c.innerHTML = `<div class="num">${t.num}</div><h3>${t.title}</h3><p>${t.desc}</p><span class="tag">${t.tag}</span>`;
+  c.onclick = () => showTopic(t.id);
+  grid.appendChild(c);
+});
+
+const tabs = document.getElementById('tabs');
+const details = document.getElementById('details');
+topics.forEach(t => {
+  const btn = document.createElement('button');
+  btn.className = 'tab';
+  btn.textContent = t.num + ' ' + t.title;
+  btn.dataset.id = t.id;
+  btn.onclick = () => showTopic(t.id);
+  tabs.appendChild(btn);
+
+  const d = document.createElement('div');
+  d.className = 'detail';
+  d.id = 'detail-' + t.id;
+  d.innerHTML = `
+    <div class="panel">
+      <h3>${t.num} · ${t.title}</h3>
+      <ul class="bullets">${t.bullets.map(b=>'<li>'+b+'</li>').join('')}</ul>
+      <pre class="code">${escapeHtml(t.code)}</pre>
+    </div>`;
+  details.appendChild(d);
+});
+
+function showTopic(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active', +t.dataset.id===id));
+  document.querySelectorAll('.detail').forEach(d=>d.classList.toggle('active', d.id==='detail-'+id));
+  document.getElementById('explore').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// Playground code
+const play = `class BankAccount {
+private:
+    double balance;          // hidden state
+public:
+    BankAccount(double b) : balance(b) {}
+    void deposit(double amt) { balance += amt; }
+    double getBalance() const { return balance; }
+};
+
+int main() {
+    BankAccount acc(1000);
+    acc.deposit(500);
+    // acc.balance = 0;  // not allowed
+    std::cout << acc.getBalance(); // ?
+}`;
+document.getElementById('playCode').innerHTML = highlight(play);
+
+function highlight(code){
+  // simple keyword highlight
+  const kw = /\b(class|public|private|protected|void|int|double|string|return|new|delete|const|virtual|override|auto)\b/g;
+  const cm = /(\/\/[^\n]*)/g;
+  let h = escapeHtml(code);
+  h = h.replace(cm, '<span class="cm">$1</span>');
+  h = h.replace(kw, '<span class="kw">$1</span>');
+  return h;
+}
+
+function reveal(){ document.getElementById('ans').style.display='block'; }
+
+// default open first
+showTopic(1);
+</script>
+</body>
+</html>
