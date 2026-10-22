@@ -40,7 +40,7 @@ Each topic lives in its own folder where you can keep your notes, diagrams, and 
 - **One concept per folder**: no mixing; you always know *what* you are learning.
 - **Hands-on**: every folder is a sandbox for your own notes and experiments.
 - **Beginner safe**: progressive difficulty from "OOP in life" to advanced miscellaneous concepts.
-- **Webpage included**: a visual, interactive companion site lives in `index.html`.
+- **Webpage included**: a visual, interactive companion site lives in `docs/index.html`.
 
 ---
 
@@ -69,7 +69,8 @@ oop-s/
 ├── 05 Polymorphism in c++/                    # Polymorphism
 ├── 06 Abstraction in c++/                     # Abstraction
 ├── 07 Miscellaneous Concepts/                 # Advanced bits
-├── index.html                                 # Companion webpage
+├── docs/
+│   └── index.html                            # Companion webpage
 ├── README.md
 ├── LICENSE
 └── .gitignore
@@ -156,7 +157,7 @@ int main() {
 
 ## 🌐 Webpage
 
-A visual companion site is included: open `index.html` in any browser. It summarizes every topic with diagrams and code highlights.
+A visual companion site is included: open `docs/index.html` in any browser. It summarizes every topic with diagrams and code highlights.
 
 ---
 
